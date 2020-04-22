@@ -40,8 +40,13 @@ if [[ "$TRAVIS_OS_NAME" = "linux" ]]; then
     case $MODE in
         windows)
             sudo dpkg --add-architecture i386
+            wget -nc https://dl.winehq.org/wine-builds/winehq.key
+            sudo apt-key add winehq.key
+            sudo apt-add-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ bionic main'
+            sudo apt update
+            sudo apt-get install -qq gcc-mingw-w64-x86-64
+            sudo apt install --install-recommends winehq-stable --yes
             sudo apt-get update
-            sudo apt-get install -qq gcc-mingw-w64-x86-64 wine
             ;;
         singlethread|dynamic|minimal)
             sudo apt-get install -qq libarchive-dev
