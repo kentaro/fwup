@@ -44,9 +44,15 @@ if [[ "$TRAVIS_OS_NAME" = "linux" ]]; then
             sudo apt-key add winehq.key
             sudo apt-add-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ bionic main'
             sudo apt update
-            sudo apt-get install -qq gcc-mingw-w64-x86-64
+            # Do we actually need this? -RC 22 APR 2020
+            sudo add-apt-repository ppa:cybermax-dexter/sdl2-backport --yes
             sudo apt install --install-recommends winehq-stable --yes
+            sudo apt install wine --yes
+            sudo apt-get install -qq gcc-mingw-w64-x86-64
             sudo apt-get update
+            echo "=== YOUR WINE VERSION IS: ====="
+            which wine
+            echo "=== ^^^ YOUR WINE VERSION IS: ====="
             ;;
         singlethread|dynamic|minimal)
             sudo apt-get install -qq libarchive-dev
