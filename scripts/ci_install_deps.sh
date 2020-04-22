@@ -47,10 +47,9 @@ if [[ "$TRAVIS_OS_NAME" = "linux" ]]; then
             # Do we actually need this? -RC 22 APR 2020
             sudo add-apt-repository ppa:cybermax-dexter/sdl2-backport --yes
             sudo apt install --install-recommends winehq-stable --yes
-            sudo apt install wine --yes
             sudo apt-get install -qq gcc-mingw-w64-x86-64
             sudo apt-get update
-            echo "=== YOUR WINE VERSION IS: ====="
+            echo "===    YOUR WINE VERSION IS: ====="
             which wine
             echo "=== ^^^ YOUR WINE VERSION IS: ====="
             ;;
