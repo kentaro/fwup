@@ -44,14 +44,14 @@ if [[ "$TRAVIS_OS_NAME" = "linux" ]]; then
             sudo apt-key add winehq.key
             sudo apt-add-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ bionic main'
             sudo apt update
-            # Do we actually need this? -RC 22 APR 2020
             sudo add-apt-repository ppa:cybermax-dexter/sdl2-backport --yes
             sudo apt install --install-recommends winehq-stable --yes
             sudo apt-get install -qq gcc-mingw-w64-x86-64
+            # sudo apt-get install build-essential autoconf pkg-config libtool mtools unzip wine wine-binfmt gcc-mingw-w64-x86-64
             sudo apt-get update
-            echo "===    YOUR WINE VERSION IS: ====="
-            which wine
-            echo "=== ^^^ YOUR WINE VERSION IS: ====="
+            # I had to manually import the wine binfmt description on one install. You'll
+            # know this is an issue if running `fwup.exe` doesn't work.
+            sudo update-binfmts --import /usr/share/binfmts/wine
             ;;
         singlethread|dynamic|minimal)
             sudo apt-get install -qq libarchive-dev
