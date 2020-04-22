@@ -47,7 +47,7 @@ if [[ "$TRAVIS_OS_NAME" = "linux" ]]; then
             sudo add-apt-repository ppa:cybermax-dexter/sdl2-backport --yes
             sudo apt install --install-recommends winehq-stable --yes
             sudo apt-get install -qq gcc-mingw-w64-x86-64
-            # sudo apt-get install build-essential autoconf pkg-config libtool mtools unzip wine wine-binfmt gcc-mingw-w64-x86-64
+            sudo apt-get install wine-binfmt
             sudo apt-get update
             # I had to manually import the wine binfmt description on one install. You'll
             # know this is an issue if running `fwup.exe` doesn't work.
