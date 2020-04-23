@@ -11,12 +11,39 @@ USE_PREBUILT=false
 
 source $BASE_DIR/scripts/common.sh
 
+UBUNTU_CODENAME=$(lsb_release -cs)
+
+case $UBUNTU_CODENAME in
+    # 14.04 to 15.10
+    trusty | utopic | vivid | wily)
+        MONO_BRANCH=stable-trusty
+        MONO_PACKAGES=mono-gmcs
+        ;;
+
+    # 16.04 to 17.10
+    xenial | yakkety | zesty | artful)
+        MONO_BRANCH=stable-xenial
+        MONO_PACKAGES=mono-complete
+        ;;
+
+    # 18.04 to 19.10
+    bionic | cosmic | disco | eoan)
+        MONO_BRANCH=stable-bionic
+        MONO_PACKAGES=mono-complete
+        ;;
+
+    *)
+        MONO_BRANCH=stable-bionic
+        MONO_PACKAGES=mono-complete
+        ;;
+esac
+
 # Install mono if necessary
 if [ ! -f /usr/bin/nuget ]; then
    sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
-   echo "deb http://download.mono-project.com/repo/debian wheezy/snapshots/3.12.0 main" | sudo tee /etc/apt/sources.list.d/mono-xamarin.list
+   echo "deb http://download.mono-project.com/repo/ubuntu ${MONO_BRANCH} main" | sudo tee /etc/apt/sources.list.d/mono-xamarin.list
    sudo apt-get update
-   sudo apt-get install -qq mono-devel mono-gmcs nuget
+   sudo apt-get install -qq $MONO_PACKAGES nuget
 fi
 
 # Ensure that some directories exist
