@@ -81,6 +81,8 @@ if [ ! -e $DEPS_INSTALL_DIR/chocolatey/console/choco.exe ]; then
         cd choco-$CHOCO_VERSION
         nuget restore src/chocolatey.sln
         chmod +x build.sh
+        echo "@@@@@@@@@@"
+        cat build.sh
         ./build.sh -v
         cp -Rf code_drop/chocolatey $DEPS_INSTALL_DIR/
     fi
