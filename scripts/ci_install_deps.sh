@@ -40,18 +40,8 @@ if [[ "$TRAVIS_OS_NAME" = "linux" ]]; then
     case $MODE in
         windows)
             sudo dpkg --add-architecture i386
-            wget -nc https://dl.winehq.org/wine-builds/winehq.key
-            sudo apt-key add winehq.key
-            sudo apt-add-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ bionic main'
-            sudo apt update
-            sudo add-apt-repository ppa:cybermax-dexter/sdl2-backport --yes
-            sudo apt install --install-recommends winehq-stable --yes
-            sudo apt-get install -qq gcc-mingw-w64-x86-64
-            sudo apt-get install wine-binfmt
             sudo apt-get update
-            # I had to manually import the wine binfmt description on one install. You'll
-            # know this is an issue if running `fwup.exe` doesn't work.
-            sudo update-binfmts --import /usr/share/binfmts/wine
+            sudo apt-get install -qq gcc-mingw-w64-x86-64 wine
             ;;
         singlethread|dynamic|minimal)
             sudo apt-get install -qq libarchive-dev
