@@ -30,7 +30,20 @@ FWUP_INSTALL_DIR=$FWUP_STAGING_DIR/usr
 FWUP_VERSION=$(cat $BASE_DIR/VERSION)
 PKG_CONFIG_PATH=$DEPS_INSTALL_DIR/lib/pkgconfig
 
-# === BUILD ===
+# === BUILD CHOCO
+cd
+git clone https://github.com/chocolatey/choco.git
+cd choco
+nuget restore src/chocolatey.sln
+chmod +x build.sh
+./build.sh -v
+
+# === BUILD WINDOWS STUFF?
+cd ~/fwup
+./scripts/build_static.sh
+
+# ======
+# Build Windows package
 rm -f fwup.exe
 cp $FWUP_INSTALL_DIR/bin/fwup.exe .
 
@@ -42,16 +55,6 @@ cp $FWUP_INSTALL_DIR/bin/fwup.exe $FWUP_INSTALL_DIR/fwup/tools/
 cp -f scripts/VERIFICATION.txt $FWUP_INSTALL_DIR/fwup/tools/
 sed -i "s/%VERSION%/$FWUP_VERSION/" $FWUP_INSTALL_DIR/fwup/tools/VERIFICATION.txt
 cat scripts/LICENSE.txt LICENSE > $FWUP_INSTALL_DIR/fwup/tools/LICENSE.txt
-
-# === BUILD CHOCO
-cd
-git clone https://github.com/chocolatey/choco.git
-cd choco
-nuget restore src/chocolatey.sln
-chmod +x build.sh
-./build.sh -v
-
-# === BUILD CHOCO
 
 cd $FWUP_INSTALL_DIR/fwup/
 rm -f *.nupkg
