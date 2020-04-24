@@ -72,17 +72,15 @@ if [ ! -e $DEPS_INSTALL_DIR/chocolatey/console/choco.exe ]; then
         tar xf $DOWNLOAD_DIR/choco-${CHOCO_VERSION}-binaries.tar.gz -C $DEPS_INSTALL_DIR
     else
         # https://github.com/aegif/CmisSync/issues/739#issuecomment-293484872
-        cd /usr/lib/mono    # <= Experiment
-        sudo mv 4.0 4.0.old # <= Experiment
-        sudo ln -s 4.5 4.0  # <= Experiment
+        # cd /usr/lib/mono    # <= Experiment
+        # sudo mv 4.0 4.0.old # <= Experiment
+        # sudo ln -s 4.5 4.0  # <= Experiment
         cd $DEPS_DIR
         rm -fr choco-*
-        tar xf $DOWNLOAD_DIR/choco-$CHOCO_VERSION.tar.gz
-        cd choco-$CHOCO_VERSION
+        git clone https://github.com/chocolatey/choco.git
+        cd choco
         nuget restore src/chocolatey.sln
         chmod +x build.sh
-        echo "@@@@@@@@@@"
-        cat build.sh
         ./build.sh -v
         cp -Rf code_drop/chocolatey $DEPS_INSTALL_DIR/
     fi
